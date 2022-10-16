@@ -6,3 +6,12 @@
 *.gz
 *.synctexgz
 *.toc
+
+parts/*.aux
+parts/*.log
+parts/*.bcf
+parts/*.out
+parts/*.run.xml
+parts/*.gz
+parts/*.synctexgz
+parts/*.toc
