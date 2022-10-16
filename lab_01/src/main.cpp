@@ -50,7 +50,7 @@ int main() {
             wcout << L"   Рекурсивный алгоритм Дамерау-Левенштейна с кэшом: " << res << endl;
         }
         else if (choice == 2) {
-            measuring_time( MAX_LEN, MAX_ITEP);
+            //measuring_time( MAX_LEN, MAX_ITEP);
             measuring_memory(MAX_LEN, STEP);
         }
     }
