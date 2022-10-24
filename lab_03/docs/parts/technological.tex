@@ -1,0 +1,205 @@
+\chapter{Технологическая часть}
+
+В данном разделе будут приведены требования к программному обеспечению, средства реализации, листинг кода и функциональные тесты.
+
+\section{Требования к программному обеспечению}
+
+К программе предъявлены ряд требований:
+
+\begin{itemize}
+	\item должна иметь интерфейс для выбора действий;
+	\item должна динамически выделять память под массив данных;
+	\item должна замерять процессорное время алгоритмов сортировки.
+\end{itemize}
+
+\section{Средства реализации}
+
+В качестве языка программирования для реализации данной лабораторной работы был выбран язык $C++$. Данный выбор обусловлен тем,
+что я имею некоторый опыт разработки на нем, а так же наличием у языка
+встроены библиотеки измерения процессорного времени и соответствие с выдвинутыми техническими требованиям.
+
+\section{Сведения о модулях программы}
+
+Данная программа разбита на следующие модули:
+
+\begin{itemize}
+	\item \texttt{main.cpp} -- Файл, содержащий точку входа в программу. В нем происходит
+	общение с пользователем и вызов алгоритмов;
+	\item \texttt{sorts.cpp} –- Файл содержит алгоритмы сортировка.
+	\item \texttt{allocate.cpp} –- Файл содержит функции динамического выделения и очищения памяти для матрицы.
+	\item \texttt{generate\_array.cpp} -- Файл содержит функции генерации данных для массива.
+	\item \texttt{read\_array.cpp} -- Файл содержит функции чтение массива потока данных.
+	\item \texttt{print\_array.cpp} -- Файл содержит функцию вывода массива данных.
+	\item \texttt{cpu\_time.cpp} –- Файл содержит функции, замеряющее процессорное время методов сортировки.
+\end{itemize}
+
+\begin{lstlisting}[label=lst:shell,caption=Функция сортировки методом Шелла]
+void shell_sorting(int *array, size_t n)
+{
+	if (array != nullptr && n > 0)
+	{
+		for (int s = n / 2; s > 0; s /= 2)
+		{
+			for (int i = s, j; i < n; i++)
+			{
+				int temp = array[i];
+				for (j = i; array[j - s] > temp && j >= s; j -= s)
+					array[j] = array[j - s];
+				array[j] = temp;
+			}
+		}
+	}
+}
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[label=lst:heap,caption=Функция пирамидальной сортировки]
+void heapify(int *array, size_t i, size_t n) {
+	size_t largest;
+	int done = 0;
+	size_t l, r;
+	
+	while((2 * i <= n) && !done) {
+		l = 2 * i;
+		r = 2 * i + 1;
+		
+		if (l == n) {
+			largest = l;
+		} else if (array[l] > array[r])
+			largest = l;
+		else
+			largest = r;
+		
+		if (array[i] < array[largest]) {
+			swap(array[i], array[largest]);
+			i = largest;
+		}
+		else
+		done = 1;
+	}
+}
+
+void heap_sort(int *array, size_t n) {
+	if (array != nullptr && n > 0) {
+		for (int i = n / 2; i >= 0; i--) {
+			heapify(array, i, n - 1);
+		}
+		
+		for (int i = n - 1; i >= 1; i--) {
+			swap(array[0], array[i]);
+			heapify(array, 0, i - 1);
+		}
+	}
+}
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[label=lst:bead,caption=Функция сортировки бусинами]
+void bead_sort(int *array, size_t n) {
+	if (array != nullptr && n > 0) {
+		int i, j, max, sum;
+		unsigned char *beads;
+		
+		for (i = 1, max = array[0]; i < n; i++)
+			if (array[i] > max)
+				max = array[i];
+		
+		beads = static_cast<unsigned char *>(calloc(1, max * n));
+		
+		for (i = 0; i < n; i++)
+			for (j = 0; j < array[i]; j++)
+				beads[i * max + j] = 1;
+		
+		for (j = 0; j < max; j++) {
+			for (sum = i = 0; i < n; i++) {
+				sum += beads[i * max + j];
+				beads[i * max + j] = 0;
+			}
+			for (i = n - sum; i < n; i++)
+				beads[i * max + j] = 1;
+		}
+		
+		for (i = 0; i < n; i++) {
+			for (j = 0; j < max && beads[i * max + j]; j++);
+			array[i] = j;
+		}
+		free(beads);
+	}
+}
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[label=lst:allocate,caption=Функции выделение и освобождение памяти под массив]
+int *allocate_arr(size_t n)
+{
+	int *arr = nullptr;
+	if (n > 0)
+		arr = static_cast<int *>(calloc(n, sizeof(int)));
+	
+	return arr;
+}
+
+void free_arr(int *arr, size_t n)
+{
+	if (n > 0)
+		free(arr);
+}
+\end{lstlisting}
+
+\begin{lstlisting}[label=lst:print,caption=Функция вывода print\_arr]
+void print_array(int *array, size_t n)
+{
+	for(int i = 0; i < n; i++)
+		std::cout << array[i] << " ";
+	std::cout << std::endl;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[label=lst:swap,caption=Функция перестановки элементов места swap]
+void swap(int &el1, int &el2)
+{
+	int temp = el1;
+	el1 = el2;
+	el2 = temp;
+}
+\end{lstlisting}
+
+\clearpage
+
+\section{Функциональные тесты}
+
+В таблице \ref{tbl:func_tests} приведены функциональные тесты для разработанных алгоритмов сортировки. Все тесты пройдены успешно.
+
+\begin{table}[ht]
+	\small
+	\begin{center}
+		\caption{Функциональные тесты}
+		\label{tbl:func_tests}
+		\begin{tabular}{|c|c|c|c|c|}
+			\hline
+			\bfseries Массив
+			& \bfseries Размер
+			& \bfseries Ожидаемый р-т
+			& \multicolumn{2}{c|}{\bfseries Фактический результат} \\ \cline{4-5}
+			& & & \bfseries Шелла/Пирам. & \bfseries Бусинами \\
+			\hline
+			41 67 34 0 69 & 5 & 0 34 41 67 69 & 0 34 41 67 69 & 0 34 41 67 69 \\
+			\hline
+			31 57 24 -10 59 & 5 & -10 24 31 57 59 & -10 24 31 57 59 & - \\
+			\hline
+			1 2 3 4 5 & 5 & 1 2 3 4 5 & 1 2 3 4 5 & 1 2 3 4 5 \\
+			\hline
+			100 88 76 65 43 & 5 & 43 65 76 88 100 & 43 65 76 88 100 & 43 65 76 88 100 \\
+			\hline
+			-59 -33 -66 -100 -31 & 5 & -100 -66 -59 -33 -31 & -100 -66 -59 -33 -31 & - \\
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\section{Вывод}
+
+Были реализованы алгоритмы: сортировка Шелла, пирамидальная сортировка и сортировка бусинами. Проведено тестирование разработанных алгоритмов.
