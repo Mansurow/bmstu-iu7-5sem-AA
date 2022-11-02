@@ -66,35 +66,35 @@
 Введем модель вычислений, которая потребуется для определения трудоемкости каждого отдельного взятого алгоритма сортировки:
 \begin{enumerate}
 	\item трудоемкость базовых операций имеет:
-		\begin{itemize}
-			\item равную 1, указанные в \ref{for:operations_1}:
-			\begin{equation}
-				\label{for:operations_1}
-				\begin{aligned}
-					+, -, =, +=, -=, ==, !=, <, >, <=, >=, [], ++, {-}-,\\
-					\&\&, >>, <<, ||, \&, |
-				\end{aligned}
-			\end{equation}
-			\item равную 2, указанные в \ref{for:operations_2}:
-			\begin{equation}
-				\label{for:operations_2}
-				*, /, \%, *=, /=, \%=
-			\end{equation}
-		\end{itemize}
+	\begin{itemize}
+		\item равную 1, указанные в \ref{for:operations_1}:
+		\begin{equation}
+			\label{for:operations_1}
+			\begin{aligned}
+				+, -, =, +=, -=, ==, !=, <, >, <=, >=, [], ++, {-}-,\\
+				\&\&, >>, <<, ||, \&, |
+			\end{aligned}
+		\end{equation}
+		\item равную 2, указанные в \ref{for:operations_2}:
+		\begin{equation}
+			\label{for:operations_2}
+			*, /, \%, *=, /=, \%=
+		\end{equation}
+	\end{itemize}
 	\item трудоемкость условного оператора:
-		\begin{equation}
-			\label{for:if}
-			f_{if} = f_{\text{условия}} + 
-			\begin{cases}
-				min(f_1, f_2), & \text{лучший случай}\\
-				max(f_1, f_2), & \text{худший случай}
-			\end{cases}
-		\end{equation}
+	\begin{equation}
+		\label{for:if}
+		f_{if} = f_{\text{условия}} + 
+		\begin{cases}
+			min(f_1, f_2), & \text{лучший случай}\\
+			max(f_1, f_2), & \text{худший случай}
+		\end{cases}
+	\end{equation}
 	\item трудоемкость цикла:
-		\begin{equation}
-			\label{for:for}
-			f_{for} = f_{\text{инициализация}} + f_{\text{сравнения}} + M_{\text{итераций}} \cdot (f_{\text{тело}} + f_{\text{инкремент}} + f_{\text{сравнения}})
-		\end{equation}
+	\begin{equation}
+		\label{for:for}
+		f_{for} = f_{\text{инициализация}} + f_{\text{сравнения}} + M_{\text{итераций}} \cdot (f_{\text{тело}} + f_{\text{инкремент}} + f_{\text{сравнения}})
+	\end{equation}
 	\item Трудоемкость передачи параметра в функции и возврат из функции равен 0.
 \end{enumerate}
 
@@ -117,7 +117,7 @@
 	\begin{aligned}
 		f_{worst} = 7 + \frac{N}{4} \cdot (5 + log(N) \cdot (10 + log(N) \cdot (6 + 4))) =\\
 		= 7 + \frac{5N}{4} + \frac{5N \cdot log(N)}{2} + \frac{5N \cdot log^2(N)}{2} = O(N \cdot log^2(N))
-\end{aligned}
+	\end{aligned}
 \end{equation}
 
 \subsection{Алгоритм пирамидальной сортировки}
@@ -164,7 +164,7 @@
 		4,
 	\end{cases})
 \end{equation}
- 
+
 Исходя из формулы \ref{сomplexity:heapify} были выведены лучший (формула \ref{сomplexity:heapify_best}) и худший (формула \ref{сomplexity:heapify_worst}) случаи функции heapify:
 
 \begin{equation}

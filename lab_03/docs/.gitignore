@@ -6,6 +6,8 @@
 *.gz
 *.synctexgz
 *.toc
+*.bbl
+*.blg
 
 parts/*.aux
 parts/*.log

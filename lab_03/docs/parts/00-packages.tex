@@ -1,6 +1,8 @@
 \usepackage{cmap} % Улучшенный поиск русских слов в полученном pdf-файле
 \usepackage[T2A]{fontenc} % Поддержка русских букв
 \usepackage[utf8]{inputenc} % Кодировка utf8
+\usepackage[english,russian]{babel} % Языки: английский, русский
+\usepackage{enumitem}
 
 \usepackage{threeparttable}
 
@@ -11,13 +13,7 @@
 \captionsetup[figure]{name={Рисунок}}
 
 \usepackage{amsmath}
-\usepackage{enumitem}
-\usepackage{graphics}
-\usepackage{graphicx}
-\usepackage{textcomp}
-\usepackage{verbatim}
-\usepackage{makeidx}
-\usepackage{biblatex}
+\usepackage{csvsimple}
 
 \usepackage{geometry}
 \geometry{left=30mm}
@@ -25,17 +21,19 @@
 \geometry{top=20mm}
 \geometry{bottom=20mm}
 
-\usepackage{float}
-\usepackage{bm}
-\usepackage{esint}
-\usepackage{mathtools}
-\usepackage{listings}
-\usepackage{courier}
-\usepackage{multirow}
-\usepackage{xcolor}
-\usepackage{csvsimple}
-\usepackage{biblatex}
 \usepackage{titlesec}
+\titleformat{\section}
+	{\normalsize\bfseries}
+	{\thesection}
+	{1em}{}
+\titlespacing*{\chapter}{0pt}{-30pt}{8pt}
+\titlespacing*{\section}{\parindent}{*4}{*4}
+\titlespacing*{\subsection}{\parindent}{*4}{*4}
+
+\usepackage{titlesec}
+\titleformat{\chapter}{\LARGE\bfseries}{\thechapter}{16pt}{\LARGE\bfseries}
+\titleformat{\section}{\Large\bfseries}{\thesection}{16pt}{\Large\bfseries}
+
 \usepackage{setspace}
 \onehalfspacing % Полуторный интервал
 
@@ -47,16 +45,16 @@
 
 % Для листинга кода:
 \lstset{%
-	language=c++,   					% выбор языка для подсветки
+	language=c++,   					% выбор языка для подсветки	
 	basicstyle=\small\sffamily,			% размер и начертание шрифта для подсветки кода
 	numbers=left,						% где поставить нумерацию строк (слева\справа)
-	%numberstyle=,						% размер шрифта для номеров строк
+	%numberstyle=,					% размер шрифта для номеров строк
 	stepnumber=1,						% размер шага между двумя номерами строк
 	numbersep=5pt,						% как далеко отстоят номера строк от подсвечиваемого кода
 	frame=single,						% рисовать рамку вокруг кода
 	tabsize=4,							% размер табуляции по умолчанию равен 4 пробелам
 	captionpos=t,						% позиция заголовка вверху [t] или внизу [b]
-	breaklines=true,
+	breaklines=true,					
 	breakatwhitespace=true,				% переносить строки только если есть пробел
 	escapeinside={\#*}{*)},				% если нужно добавить комментарии в коде
 	backgroundcolor=\color{white},
@@ -68,23 +66,19 @@
 \usetikzlibrary{datavisualization.formats.functions}
 
 \usepackage{graphicx}
-\newcommand{\imgScale}[3] {
+\newcommand{\img}[3] {
 	\begin{figure}[h!]
-		\center{\includegraphics[scale=#1]{img/#2}} % height
+		\center{\includegraphics[height=#1]{img/#2}}
 		\caption{#3}
 		\label{img:#2}
 	\end{figure}
 }
 
-\usepackage{graphicx}
-\newcommand{\imgHeight}[3] {
-	\begin{figure}[h!]
-		\center{\includegraphics[height=#1]{img/#2}} % height
-		\caption{#3}
-		\label{img:#2}
-	\end{figure}
-}
 
 \usepackage[justification=centering]{caption} % Настройка подписей float объектов
 
-\author{Мансуров Владислав Михайлович}
+\usepackage[unicode,pdftex]{hyperref} % Ссылки в pdf
+\hypersetup{hidelinks}
+
+\newcommand{\code}[1]{\texttt{#1}}
+
