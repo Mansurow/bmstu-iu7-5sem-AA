@@ -1,23 +1,5 @@
-\addcontentsline{toc}{chapter}{Список используемых источников}
-\renewcommand\bibname{Список используемых источников} % переименовать страницу списка литературы
+\addcontentsline{toc}{chapter}{Список использованных источников}
 
-\begin{thebibliography}{5}
-	\bibitem{book_lev}
-	Левенштейн В. И. Двоичные коды с исправлением выпадений, вставок и замещений символов. – М.: Доклады АН СССР, 1965: Т. 163. С. 845– 848.
-	\bibitem{cpp}
-	Документация по Microsoft C++ [Электронный ресурс]. 
-	
-	Режим доступа: \url{https://learn.microsoft.com/ru-ru/cpp/?view=msvc-170&viewFallbackFrom=vs-2017} (дата обращения: 25.09.2022).
-	\bibitem{time}
-	C library function clock() [Электронный ресурс]. 
-	
-	Режим доступа: \url{https://www.tutorialspoint.com/c_standard_library/c_function_clock.htm} (дата обращения: 25.09.2022).
-	\bibitem{windows}
-	Windows 10 Pro 2h21 64-bit  Электронный ресурс]. 
-	
-	Режим доступа: \url{https://www.microsoft.com/ru-ru/software-download/windows10} (дата обращения: 25.09.2022).
-	\bibitem{intel}
-	Intel [Электронный ресурс]. 
-	
-	Режим доступа: \url{https://ark.intel.com/content/www/ru/ru/ark/products/201839/intel-core-i510300h-processor-8m-cache-up-to-4-50-ghz.html} (дата обращения: 25.09.2022).
-\end{thebibliography}
+\renewcommand\bibname{Список использованных источников} % переименовать страницу списка литературы
+\bibliographystyle{parts/utf8gost705u}  % стилевой файл для оформления по ГОСТу
+\bibliography{parts/lib.bib}          % имя библиографической базы (bib-файла)
