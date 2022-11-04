@@ -1,0 +1,77 @@
+\chapter{Аналитическая часть}
+
+В этом разделе будут рассмотрены классический алгоритм умножения матриц и алгоритм Винограда, а также его оптимизированная версия.
+
+\section{Матрица}
+
+\textbf{Матрицой} [\ref{lib:matrix}] называют таблицу чисел $a_{ik}$ вида
+\begin{equation}
+	\begin{pmatrix}
+		a_{11} & a_{12} & \ldots & a_{1n}\\
+		a_{21} & a_{22} & \ldots & a_{2n}\\
+		\vdots & \vdots & \ddots & \vdots\\
+		a_{m1} & a_{m2} & \ldots & a_{mn}
+	\end{pmatrix},
+\end{equation}
+
+состоящую из $m$ строк и $n$ столбцов. Числа $a_{ik}$ называются её \textit{элементами}.
+
+Пусть $A$ -- матрица, тогда $A_{i,j}$ -- элемент этой матрицы, который находится на \textit{i-ой} строке и \textit{j-ом} столбце.
+
+Можно выделить следующие операции над матрицами:
+\begin{enumerate}[label=\arabic*)]
+	\item сложение матриц одинакового размера;
+	\item вычитание матриц одинакового размера;
+	\item умножение матриц в случае, если количество столбцов первой матрицы равно количеству строк второй матрицы. В итоговой матрице количество строк будет, как у первой матрицы, а столбцов -- как у второй. \newline
+\end{enumerate}
+
+\textit{Замечание:} операция умножения матриц не коммутативна -- если \textit{A} и \textit{B} -- квадратные матрицы, а \textit{C} -- результат их перемножения, то произведение \textit{AB} и \textit{BA} дадут разный результат \textit{C}.
+
+\section{Классический алгоритм умножения матриц}
+
+Пусть даны две матрицы
+
+\begin{equation}
+	A_{lm} = \begin{pmatrix}
+		a_{11} & a_{12} & \ldots & a_{1m}\\
+		a_{21} & a_{22} & \ldots & a_{2m}\\
+		\vdots & \vdots & \ddots & \vdots\\
+		a_{l1} & a_{l2} & \ldots & a_{lm}
+	\end{pmatrix},
+	\quad
+	B_{mn} = \begin{pmatrix}
+		b_{11} & b_{12} & \ldots & b_{1n}\\
+		b_{21} & b_{22} & \ldots & b_{2n}\\
+		\vdots & \vdots & \ddots & \vdots\\
+		b_{m1} & b_{m2} & \ldots & b_{mn}
+	\end{pmatrix},
+\end{equation}
+
+тогда матрица $C$
+\begin{equation}
+	C_{ln} = \begin{pmatrix}
+		c_{11} & c_{12} & \ldots & c_{1n}\\
+		c_{21} & c_{22} & \ldots & c_{2n}\\
+		\vdots & \vdots & \ddots & \vdots\\
+		c_{l1} & c_{l2} & \ldots & c_{ln}
+	\end{pmatrix},
+\end{equation}
+
+где
+\begin{equation}
+	\label{eq:M}
+	c_{ij} =
+	\sum_{r=1}^{m} a_{ir}b_{rj} \quad (i=\overline{1,l}; j=\overline{1,n})
+\end{equation}
+
+будет называться произведением матриц $A$ и $B$ [\ref{lib:matrix}].
+
+Классический алгоритм реализует данную формулу.
+
+\section{Алгоритм Копперсмита-Винограда}
+
+
+
+\section{Алгоритм Копперсмита-Винограда}
+
+\section{Оптимизация алгоритма Копперсмита-Винограда}

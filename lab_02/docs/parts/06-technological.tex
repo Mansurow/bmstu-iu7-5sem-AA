@@ -1,0 +1,260 @@
+\chapter{Технологическая часть}
+
+В данном разделе будут приведены требования к программному обеспечению, средства реализации, листинг кода и функциональные тесты.
+
+\section{Требования к программному обеспечению}
+
+К программе предъявлены ряд требований:
+
+\begin{itemize}
+	\item должна иметь интерфейс для выбора действий;
+	\item должна иметь стандартные реализации вектора с динамическим выделением памяти;
+	\item должна замерять процессорное время алгоритмов умножения матриц.
+\end{itemize}
+
+\section{Средства реализации}
+
+В качестве языка программирования для реализации данной лабораторной работы был выбран язык $C++$\cite{cpp-lang}. Данный выбор обусловлен тем,
+что я имею некоторый опыт разработки на нем, а так же наличием у языка
+встроены библиотеки измерения процессорного времени и соответствие с выдвинутыми техническими требованиям.
+
+В качестве измерения время использовалось функция \textit{clock()} из библиотеки \textit{ctime}\cite{cpp-lang-time}. 
+
+\section{Сведения о модулях программы}
+
+Данная программа разбита на следующие модули:
+
+\begin{itemize}
+	\item \texttt{main.cpp} -- Файл, содержащий точку входа в программу. В нем происходит
+	общение с пользователем и вызов алгоритмов;
+	\item \texttt{multy\_mtr.cpp} –- Файл содержит алгоритмы умножения матриц.
+	\item \texttt{print\_mtr.cpp} -- Файл содержит функцию вывода матрицы.
+	\item \texttt{read\_mtr.cpp} -- Файл содержит функции чтение матрицы.
+	\item \texttt{cpu\_time.cpp} –- Файл содержит функции, замеряющее процессорное время алгоритмов умножения матриц.
+\end{itemize}
+
+\lstinputlisting[label=lst:standart,caption=Функция классического алгоритма умножения матриц, firstline=9,lastline=30]{../src/multy_mtr.cpp}
+\clearpage
+
+\lstinputlisting[label=lst:vinograd,caption=Функция  умножения матриц по алгоритму Винограда, firstline=32,lastline=66]{../src/multy_mtr.cpp}
+\clearpage
+
+\lstinputlisting[label=lst:vinograd_opt,caption=Функция  умножения матриц по оптимизированному алгоритму Винограда, firstline=68,lastline=103]{../src/multy_mtr.cpp}
+\clearpage
+
+\lstinputlisting[label=lst:read,caption=Функции ввода матрицы, firstline=3]{../src/read_mtr.cpp}
+
+\clearpage
+
+\lstinputlisting[label=lst:print,caption=Функция вывода матрицы, firstline=3,lastline=26]{../src/print_mtr.cpp}
+
+\section{Функциональные тесты}
+
+В таблице \ref{tbl:func_tests_std}, \ref{tbl:func_tests_vin} приведены функциональные тесты для разработанных алгоритмов сортировки. Все тесты пройдены успешно.
+
+\clearpage
+
+\begin{table}[ht]
+	\small
+	\begin{center}
+		\caption{Функциональные тесты для классического алгоритма умножения матриц}
+		\label{tbl:func_tests_std}
+		\begin{tabular}{|c|c|c|c|c|}
+			\hline
+			\bfseries Матрица 1
+			& \bfseries Матрица 2
+			& \bfseries Ожидаемый результат
+			& \bfseries Фактический результат \\
+			\hline
+			$\begin{pmatrix}
+				1 & 5 & 7\\
+				2 & 6 & 8\\
+				3 & 7 & 9
+			\end{pmatrix}$ 
+			&  
+			$\begin{pmatrix}
+				&
+			\end{pmatrix}$
+			&
+			\text{Сообщение об ошибке}
+			&
+			\text{Сообщение об ошибке} \\ 
+			\hline
+			$\begin{pmatrix}
+				1 & 5 & 7\\
+			\end{pmatrix}$ 
+			&  
+			$\begin{pmatrix}
+				1 & 2 & 3\\
+			\end{pmatrix}$
+			&
+			\text{Сообщение об ошибке}
+			&
+			\text{Сообщение об ошибке} \\ 
+			\hline
+			$\begin{pmatrix}
+				1 & 2 & 3\\
+				4 & 5 & 6 \\
+				7 & 8 & 9 \\
+			\end{pmatrix}$ 
+			&  
+			$\begin{pmatrix}
+				1 & 0 & 0\\
+				0 & 1 & 0 \\
+				0 & 0 & 1 \\
+			\end{pmatrix}$
+			&
+			$\begin{pmatrix}
+				1 & 0 & 0\\
+				0 & 1 & 0 \\
+				0 & 0 & 1 \\
+			\end{pmatrix}$
+			&
+			$\begin{pmatrix}
+				1 & 2 & 3\\
+				4 & 5 & 6 \\
+				7 & 8 & 9 \\
+			\end{pmatrix}$ \\ 
+			\hline
+			$\begin{pmatrix}
+				3 & 5\\
+				2 & 1\\
+				9 & 7\\
+			\end{pmatrix}$
+			&
+			$\begin{pmatrix}
+				1 & 2 & 3\\
+				4 & 5 & 6 \\
+			\end{pmatrix}$
+			&
+			$\begin{pmatrix}
+				23 & 31 & 39 \\
+				6 & 9 & 12
+			\end{pmatrix}$ 
+			&
+			$\begin{pmatrix}
+				23 & 31 & 39 \\
+				6 & 9 & 12
+			\end{pmatrix}$ \\ 
+			\hline
+			$\begin{pmatrix}
+				10
+			\end{pmatrix}$
+			&
+			$\begin{pmatrix}
+				35
+			\end{pmatrix}$
+			&
+			$\begin{pmatrix}
+				350
+			\end{pmatrix}$ 
+			&
+			$\begin{pmatrix}
+				350
+			\end{pmatrix}$ \\ 
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{table}[ht]
+	\small
+	\begin{center}
+		\caption{Функциональные тесты для умножения матриц по алгоритму Винограда}
+		\label{tbl:func_tests_vin}
+		\begin{tabular}{|c|c|c|c|c|}
+			\hline
+			\bfseries Матрица 1
+			& \bfseries Матрица 2
+			& \bfseries Ожидаемый результат
+			& \bfseries Фактический результат \\
+			\hline
+			$\begin{pmatrix}
+				1 & 5 & 7\\
+				2 & 6 & 8\\
+				3 & 7 & 9
+			\end{pmatrix}$ 
+			&  
+			$\begin{pmatrix}
+				&
+			\end{pmatrix}$
+			&
+			\text{Сообщение об ошибке}
+			&
+			\text{Сообщение об ошибке} \\ 
+			\hline
+			$\begin{pmatrix}
+				1 & 5 & 7\\
+			\end{pmatrix}$ 
+			&  
+			$\begin{pmatrix}
+				1 & 2 & 3\\
+			\end{pmatrix}$
+			&
+			\text{Сообщение об ошибке}
+			&
+			\text{Сообщение об ошибке} \\ 
+			\hline
+			$\begin{pmatrix}
+				1 & 2 & 3\\
+				4 & 5 & 6 \\
+				7 & 8 & 9 \\
+			\end{pmatrix}$ 
+			&  
+			$\begin{pmatrix}
+				1 & 0 & 0\\
+				0 & 1 & 0 \\
+				0 & 0 & 1 \\
+			\end{pmatrix}$
+			&
+			$\begin{pmatrix}
+				1 & 0 & 0\\
+				0 & 1 & 0 \\
+				0 & 0 & 1 \\
+			\end{pmatrix}$
+			&
+			$\begin{pmatrix}
+				1 & 2 & 3\\
+				4 & 5 & 6 \\
+				7 & 8 & 9 \\
+			\end{pmatrix}$ \\ 
+			\hline
+			$\begin{pmatrix}
+				3 & 5\\
+				2 & 1\\
+				9 & 7\\
+			\end{pmatrix}$
+			&
+			$\begin{pmatrix}
+				1 & 2 & 3\\
+				4 & 5 & 6 \\
+			\end{pmatrix}$
+			&
+			\text{Сообщение об ошибке} 
+			&
+			\text{Сообщение об ошибке} \\ 
+			\hline
+			$\begin{pmatrix}
+				10
+			\end{pmatrix}$
+			&
+			$\begin{pmatrix}
+				35
+			\end{pmatrix}$
+			&
+			$\begin{pmatrix}
+				350
+			\end{pmatrix}$ 
+			&
+			$\begin{pmatrix}
+				350
+			\end{pmatrix}$ \\ 
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+
+\section{Вывод}
+
+Были представлены листинги реализаций всех алгоритмов умножения матриц -- стандартного, Винограда и оптимизированного алгоритма Винограда. Также в данном разделе была приведена информации о выбранных средствах для разработки алгоритмов

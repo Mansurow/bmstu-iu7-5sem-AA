@@ -1,0 +1,213 @@
+\chapter{Конструкторская часть}
+
+В этом разделе будут представлены описания используемых типов данных, а также схемы алгоритмов перемножения матриц – стандартного, Винограда и оптимизации алгоритма Винограда
+
+\section{Функциональные требования}
+
+К программе предъявлены ряд функциональных требований:
+
+\begin{itemize}
+	\item входные данные -- размеры матрицы, целые числа и матрица, двумерный массив целых чисел;
+	\item выходные данные -- матрица;
+\end{itemize}
+
+\section{Разработка алгоритмов}
+
+На рисунке \ref{img:standart} представлена схема алгоритма для стандартного умножения матриц. На рисунках \ref{img:vinograd_alg_1},\ref{img:vinograd_alg_2} схема алгоритма Винограда умножения матриц, а на \ref{img:vinograd_opt_alg_1},\ref{img:vinograd_opt_alg_2} –- схема оптимизированного алгоритма Винограда.
+
+\imgScale{0.7}{standart}{Схема стандартного алгоритма умножения матриц}
+\clearpage
+\imgScale{0.55}{vinograd_alg_1}{Схема умножения матриц по алгоритму Винограда (Часть 1)}
+\imgScale{0.55}{vinograd_alg_2}{Схема умножения матриц по алгоритму Винограда (Часть 2)}
+\clearpage
+\imgScale{0.55}{vinograd_opt_alg_1}{Схема умножения матриц по оптимизированному алгоритму Винограда (Часть 1)}
+\imgScale{0.55}{vinograd_opt_alg_2}{Схема умножения матриц по оптимизированному алгоритму Винограда (Часть 2)}
+
+\section{Описание используемых типов данных}
+
+При реализации алгоритмов будут использованы следующие структуры данных:
+
+\begin{itemize}
+	\item количество строк -- целое число;
+	\item количество столбцов -- целое число;
+	\item матрица -- двумерный список целых чисел
+\end{itemize}
+
+\section{Модель вычислений для проведения оценки трудоемкости}
+
+Введем модель вычислений, которая потребуется для определения трудоемкости каждого отдельного взятого алгоритма сортировки:
+\begin{enumerate}
+	\item трудоемкость базовых операций имеет:
+	\begin{itemize}
+		\item равную 1, указанные в \ref{for:operations_1}:
+		\begin{equation}
+			\label{for:operations_1}
+			\begin{aligned}
+				+, -, =, +=, -=, ==, !=, <, >, <=, >=, [], ++, {-}-,\\
+				\&\&, >>, <<, ||, \&, |
+			\end{aligned}
+		\end{equation}
+		\item равную 2, указанные в \ref{for:operations_2}:
+		\begin{equation}
+			\label{for:operations_2}
+			*, /, \%, *=, /=, \%=
+		\end{equation}
+	\end{itemize}
+	\item трудоемкость условного оператора:
+	\begin{equation}
+		\label{for:if}
+		f_{if} = f_{\text{условия}} + 
+		\begin{cases}
+			min(f_1, f_2), & \text{лучший случай}\\
+			max(f_1, f_2), & \text{худший случай}
+		\end{cases}
+	\end{equation}
+	\item трудоемкость цикла:
+	\begin{equation}
+		\label{for:for}
+		f_{for} = f_{\text{инициализация}} + f_{\text{сравнения}} + M_{\text{итераций}} \cdot (f_{\text{тело}} + f_{\text{инкремент}} + f_{\text{сравнения}})
+	\end{equation}
+	\item Трудоемкость передачи параметра в функции и возврат из функции равны 0.
+\end{enumerate}
+
+\section{Трудоемкость алгоритмов}
+
+Рассчитаем трудоемкость алгоритмов умножения матриц.
+
+\subsection{Классический алгоритм}
+
+Для стандартного алгоритма умножения матриц трудоемкость будет слагаться из:
+
+\begin{itemize}
+	\item внешнего цикла по $i \in [1 \ldots N]$ , трудоёмкость которого: $f = 2 + N \cdot (2 + f_{body})$;
+	\item цикла по $j \in [1 \ldots T]$ , трудоёмкость которого: $f = 2 + 2 + T \cdot (2 + f_{body})$;
+	\item цикла по $k \in [1 \ldots M]$ , трудоёмкость которого: $f = 2 + 2 + 14M$;
+\end{itemize}
+
+Поскольку трудоемкость стандартного алгоритма равна трудоемкости внешнего цикла, то:
+\begin{equation}
+	\label{сomplexity:standart}
+	\begin{aligned}
+		f_{standart} = 2 + N \cdot (2 + 2 + T \cdot (2 + 2 + M \cdot (2 + 8 + 1 + 1 + 2)))= \\
+		= 2 + 4N + 4NT + 14NMT \approx 14NMT = O(N^3)
+	\end{aligned}
+\end{equation}
+
+\subsection{Алгоритм Винограда}
+
+Чтобы вычислить трудоемкость алгоритма Винограда, нужно учесть следующее:
+\begin{itemize}
+	\item создания и инициализации массивов $a_{tmp}$ и $b_{tmp}$, трудоёмкость которых \ref{сomplexity:v_init}:
+	\begin{equation}
+		\label{сomplexity:v_init}
+		f_{init} = N + M
+	\end{equation}
+	\item заполнения массива $a_{tmp}$, трудоёмкость которого \ref{сomplexity:v_atmp}:
+	\begin{equation}
+		\label{сomplexity:v_atmp}
+		\begin{aligned}
+			f_{atmp} = 2 + N \cdot (4 + \frac{M}{2} \cdot (4 + 6 + 1 + 2 + 3 \cdot 2)) = \\
+			= 2 + 4N + \frac{19NM}{2} = 2 + 4N + 9,5NM
+		\end{aligned} 
+	\end{equation}
+	\item заполнения массива $b_{tmp}$, трудоёмкость которого \ref{сomplexity:v_btmp}:
+	\begin{equation}
+		\label{сomplexity:v_btmp}
+		\begin{aligned}
+			f_{btmp} = 2 + T \cdot (4 + \frac{M}{2} \cdot (4 + 6 + 1 + 2 + 3 \cdot 2)) = \\
+			= 2 + 4T + \frac{19TM}{2} = 2 + 4T + 9,5TM
+		\end{aligned}  
+	\end{equation}
+	\item цикла заполнения для чётных размеров, трудоёмкость которого \ref{сomplexity:v_cycle}:
+	\begin{equation}
+		\label{сomplexity:v_cycle}
+		\begin{aligned}
+			f_{cycle} = 2 + N \cdot (4 + T \cdot (2 + 7 + 4 + \frac{M}{2} \cdot (4 + 28))) = \\
+			= 2 + 4N + 13NT + \frac{32NTM}{2}  = 2 + 4N + 13NT + 16NTM 
+		\end{aligned}
+	\end{equation}
+	\item цикла, который дополнительно нужен для подсчёта значений при нечётном размере матрицы, трудоемкость которого \ref{сomplexity:v_check}:
+	\begin{equation}
+		\label{сomplexity:v_check}
+		\begin{aligned}
+			f_{check} = 3 + 
+			\begin{cases}
+				0,~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\text{чётная} \\
+				2 + N \cdot (4 + T \cdot (2 + 14)) = 2 + 4N + 16NT,\text{иначе}
+			\end{cases}
+		\end{aligned}  
+	\end{equation}
+\end{itemize}
+
+Тогда для худшего случая (нечётный общий размер матриц) имеем \ref{сomplexity:vinograd_worst}:
+\begin{equation}
+	\label{сomplexity:vinograd_worst}
+	\begin{aligned}
+		f_{worst} = f_{init} + f_{atmp} + f_{btmp} + f_{cycle} + f_{check} \approx 16NMT = O(N^3)
+	\end{aligned}
+\end{equation}
+
+Для лучшего случая (чётный общий размер матриц) имеем \ref{сomplexity:vinograd_best}:
+\begin{equation}
+	\label{сomplexity:vinograd_best}
+	\begin{aligned}
+		f_{best} = f_{init} + f_{atmp} + f_{btmp} + f_{cycle} + f_{check} \approx 16NMT = O(N^3)
+	\end{aligned}
+\end{equation}
+
+\subsection{Оптимизированный алгоритм Винограда}
+
+Оптимизация заключается в:
+\begin{itemize}
+	\item кэшировании значения $\frac{M}{2}$ в циклах;
+	\item использовании побитового сдвига вместо умножения на 2;
+	\item замены операции сложения и вычитания на операции $+=$ и $-=$ соответственно.
+\end{itemize}
+
+Тогда трудоемкость оптимизированного алгоритма Винограда состоит из:
+\begin{itemize}
+	\item кэширования значения $\frac{M}{2}$ в циклах, которое равно 3;
+	\item создания и инициализации массивов $a_{tmp}$ и $b_{tmp}$ \ref{сomplexity:v_init};
+	\item заполнения массива $a_{tmp}$, трудоёмкость которого \ref{сomplexity:v_atmp};
+	\item заполнения массива $b_{tmp}$, трудоёмкость которого \ref{сomplexity:v_btmp};
+	\item цикла заполнения для чётных размеров, трудоёмкость которого \ref{сomplexity:v_opt_cycle}:
+	\begin{equation}
+		\label{сomplexity:v_opt_cycle}
+		\begin{aligned}
+			f_{cycle} = 2 + N \cdot (4 + T \cdot (4 + 7 + \frac{M}{2} \cdot (2 + 10 + 5 + 2 + 4))) = \\
+			= 2 + 4N + 11NT + \frac{23NTM}{2}  = 2 + 4N + 11NT + 11,5 \cdot NTM 
+		\end{aligned}
+	\end{equation}
+	\item условие, которое нужно для дополнительных вычислений при нечётном размере матрицы, трудоемкость которого \ref{сomplexity:v_opt_check}:
+	\begin{equation}
+		\label{сomplexity:v_opt_check}
+		\begin{aligned}
+			f_{check} = 3 + 
+			\begin{cases}
+				0,~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\text{чётная} \\
+				2 + N \cdot (4 + T \cdot (2 + 10)) = 2 + 4N + 12NT,\text{иначе}
+			\end{cases}
+		\end{aligned}  
+	\end{equation}
+\end{itemize}
+
+Тогда для худшего случая (нечётный общий размер матриц) имеем \ref{сomplexity:vinograd_opt_worst}:
+\begin{equation}
+	\label{сomplexity:vinograd_opt_worst}
+	\begin{aligned}
+		f_{worst} = 3 + f_{init} + f_{atmp} + f_{btmp} + f_{cycle} + f_{check} \approx 11NMT = O(N^3)
+	\end{aligned}
+\end{equation}
+
+Для лучшего случая (чётный общий размер матриц) имеем \ref{сomplexity:vinograd_opt_best}:
+\begin{equation}
+	\label{сomplexity:vinograd_opt_best}
+	\begin{aligned}
+		f_{best} = 3 + f_{init} + f_{atmp} + f_{btmp} + f_{cycle} + f_{check} \approx 11NMT = O(N^3)
+	\end{aligned}
+\end{equation}
+
+\section{Вывод}
+
+В данном разделе были построены схемы алгоритмов умножения матриц,
+рассматриваемых в лабораторной работе, были описаны классы эквивалентности для функционального тестирования и модули программы. Проведённая теоретическая оценка трудоемкости алгоритмов показала, что в трудоёмкость выполнения алгоритма Винограда в случае оптимизации в 1.2 раза меньше, чем у простого алгоритма Винограда.
