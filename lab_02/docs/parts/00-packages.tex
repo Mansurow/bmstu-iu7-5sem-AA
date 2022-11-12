@@ -9,6 +9,8 @@
 \usepackage[14pt]{extsizes}
 
 \usepackage{caption}
+\captionsetup[table]{justification=raggedright,singlelinecheck=off}
+\captionsetup[lstlisting]{justification=raggedright,singlelinecheck=off}
 \captionsetup{labelsep=endash}
 \captionsetup[figure]{name={Рисунок}}
 
@@ -23,10 +25,9 @@
 
 \usepackage{titlesec}
 \titleformat{\section}
-	{\normalsize\bfseries}
-	{\thesection}
-	{1em}{}
-	
+{\normalsize\bfseries}
+{\thesection}
+{1em}{}
 \titlespacing*{\chapter}{0pt}{-30pt}{8pt}
 \titlespacing*{\section}{\parindent}{*4}{*4}
 \titlespacing*{\subsection}{\parindent}{*4}{*4}
@@ -39,7 +40,8 @@
 \onehalfspacing % Полуторный интервал
 
 \frenchspacing
-\usepackage{indentfirst} % Красная строка
+\usepackage{indentfirst} % Красная строка после заголовка
+\setlength\parindent{1.25cm}
 
 \usepackage{listings}
 \usepackage{xcolor}
@@ -58,8 +60,7 @@
 	breaklines=true,					
 	breakatwhitespace=true,				% переносить строки только если есть пробел
 	escapeinside={\#*}{*)},				% если нужно добавить комментарии в коде
-	backgroundcolor=\color{white},
-	inputencoding=utf8x
+	backgroundcolor=\color{white}
 }
 
 \lstset{
@@ -145,7 +146,6 @@
 	\end{figure}
 }
 
-\usepackage{graphicx}
 \newcommand{\imgHeight}[3] {
 	\begin{figure}[h!]
 		\center{\includegraphics[height=#1]{img/#2}} % height
@@ -160,4 +160,3 @@
 \hypersetup{hidelinks}
 
 \newcommand{\code}[1]{\texttt{#1}}
-

@@ -1,6 +1,6 @@
 \chapter{Технологическая часть}
 
-В данном разделе будут приведены требования к программному обеспечению, средства реализации, листинг кода и функциональные тесты.
+В данном разделе приведены требования к программному обеспечению, средства реализации, листинг кода и функциональные тесты.
 
 \section{Требования к программному обеспечению}
 
@@ -14,11 +14,12 @@
 
 \section{Средства реализации}
 
-В качестве языка программирования для реализации данной лабораторной работы был выбран язык $C++$\cite{cpp-lang}. Данный выбор обусловлен тем,
-что я имею некоторый опыт разработки на нем, а так же наличием у языка
-встроены библиотеки измерения процессорного времени и соответствие с выдвинутыми техническими требованиям.
+В качестве языка программирования для реализации данной лабораторной работы был выбран язык $C++$\cite{cpp-lang}. Данный выбор обусловлен наличием у языка
+встроенной библиотекой измерения процессорного времени и соответствием с выдвинутыми техническими требованиям.
 
 В качестве измерения время использовалось функция \textit{clock()} из библиотеки \textit{ctime}\cite{cpp-lang-time}. 
+
+\clearpage
 
 \section{Сведения о модулях программы}
 
@@ -35,138 +36,140 @@
 	\item \texttt{cpu\_time.cpp} –- Файл содержит функции, замеряющее процессорное время методов сортировки.
 \end{itemize}
 
+В листингах \ref{lst:shell} -- \ref{lst:bead} реализованы алгоритмы сортировка, а именно сортировка Шелла, пирамидальная сортировка и сортировка бусинами.
+
+В листингах \ref{lst:allocate} -- \ref{lst:swap} реализованы алгоритмы выделение, вывода матриц и алгоритм перестановки элементов местами.
+
+\clearpage
+
 \begin{lstlisting}[label=lst:shell,caption=Функция сортировки методом Шелла]
-	void shell_sorting(int *array, size_t n)
-	{
-		if (array != nullptr && n > 0)
-		{
-			for (int s = n / 2; s > 0; s /= 2)
+void shell_sorting(int *array, size_t n)
+{
+	if (array != nullptr && n > 0)
+		for (int s = n / 2; s > 0; s /= 2)
+			for (int i = s, j; i < n; i++)
 			{
-				for (int i = s, j; i < n; i++)
-				{
-					int temp = array[i];
-					for (j = i; array[j - s] > temp && j >= s; j -= s)
-					array[j] = array[j - s];
-					array[j] = temp;
-				}
+				int temp = array[i];
+				for (j = i; array[j - s] > temp && j >= s; j -= s)
+				array[j] = array[j - s];
+				array[j] = temp;
 			}
-		}
-	}
+}
 \end{lstlisting}
 
 \clearpage
 
 \begin{lstlisting}[label=lst:heap,caption=Функция пирамидальной сортировки]
-	void heapify(int *array, size_t i, size_t n) {
-		size_t largest;
-		int done = 0;
-		size_t l, r;
-		
-		while((2 * i <= n) && !done) {
-			l = 2 * i;
-			r = 2 * i + 1;
-			
-			if (l == n) {
-				largest = l;
-			} else if (array[l] > array[r])
-			largest = l;
-			else
-			largest = r;
-			
-			if (array[i] < array[largest]) {
-				swap(array[i], array[largest]);
-				i = largest;
-			}
-			else
-			done = 1;
-		}
-	}
+void heapify(int *array, size_t i, size_t n) {
+	size_t largest;
+	int done = 0;
+	size_t l, r;
 	
-	void heap_sort(int *array, size_t n) {
-		if (array != nullptr && n > 0) {
-			for (int i = n / 2; i >= 0; i--) {
-				heapify(array, i, n - 1);
-			}
-			
-			for (int i = n - 1; i >= 1; i--) {
-				swap(array[0], array[i]);
-				heapify(array, 0, i - 1);
-			}
+	while((2 * i <= n) && !done) {
+		l = 2 * i;
+		r = 2 * i + 1;
+		
+		if (l == n) {
+			largest = l;
+		} else if (array[l] > array[r])
+			largest = l;
+		else
+			largest = r;
+		
+		if (array[i] < array[largest]) {
+			swap(array[i], array[largest]);
+			i = largest;
+		}
+		else
+			done = 1;
+	}
+}
+
+void heap_sort(int *array, size_t n) {
+	if (array != nullptr && n > 0) {
+		for (int i = n / 2; i >= 0; i--) {
+			heapify(array, i, n - 1);
+		}
+		
+		for (int i = n - 1; i >= 1; i--) {
+			swap(array[0], array[i]);
+			heapify(array, 0, i - 1);
 		}
 	}
+}
 \end{lstlisting}
 
 \clearpage
 
 \begin{lstlisting}[label=lst:bead,caption=Функция сортировки бусинами]
-	void bead_sort(int *array, size_t n) {
-		if (array != nullptr && n > 0) {
-			int i, j, max, sum;
-			unsigned char *beads;
-			
-			for (i = 1, max = array[0]; i < n; i++)
+void bead_sort(int *array, size_t n) {
+	if (array != nullptr && n > 0) {
+		int i, j, max, sum;
+		unsigned char *beads;
+		
+		for (i = 1, max = array[0]; i < n; i++)
 			if (array[i] > max)
-			max = array[i];
-			
-			beads = static_cast<unsigned char *>(calloc(1, max * n));
-			
-			for (i = 0; i < n; i++)
+				max = array[i];
+		
+		beads = static_cast<unsigned char *>(calloc(1, max * n));
+		
+		for (i = 0; i < n; i++)
 			for (j = 0; j < array[i]; j++)
 			beads[i * max + j] = 1;
-			
-			for (j = 0; j < max; j++) {
-				for (sum = i = 0; i < n; i++) {
-					sum += beads[i * max + j];
-					beads[i * max + j] = 0;
-				}
-				for (i = n - sum; i < n; i++)
+		
+		for (j = 0; j < max; j++) {
+			for (sum = i = 0; i < n; i++) {
+				sum += beads[i * max + j];
+				beads[i * max + j] = 0;
+			}
+			for (i = n - sum; i < n; i++)
 				beads[i * max + j] = 1;
-			}
-			
-			for (i = 0; i < n; i++) {
-				for (j = 0; j < max && beads[i * max + j]; j++);
-				array[i] = j;
-			}
-			free(beads);
 		}
+		
+		for (i = 0; i < n; i++) {
+			for (j = 0; j < max && beads[i * max + j]; j++);
+			array[i] = j;
+		}
+		free(beads);
 	}
+}
 \end{lstlisting}
 
 \clearpage
 
 \begin{lstlisting}[label=lst:allocate,caption=Функции выделение и освобождение памяти под массив]
-	int *allocate_arr(size_t n)
-	{
-		int *arr = nullptr;
-		if (n > 0)
+int *allocate_arr(size_t n)
+{
+	int *arr = nullptr;
+	if (n > 0)
 		arr = static_cast<int *>(calloc(n, sizeof(int)));
-		
-		return arr;
-	}
 	
-	void free_arr(int *arr, size_t n)
-	{
-		if (n > 0)
-		free(arr);
-	}
+	return arr;
+}
+
+void free_arr(int *arr, size_t n)
+{
+	if (n > 0)
+	free(arr);
+}
 \end{lstlisting}
 
 \begin{lstlisting}[label=lst:print,caption=Функция вывода print\_arr]
-	void print_array(int *array, size_t n)
-	{
-		for(int i = 0; i < n; i++)
+void print_array(int *array, size_t n)
+{
+	for(int i = 0; i < n; i++)
 		std::cout << array[i] << " ";
-		std::cout << std::endl;
-	}
+	std::cout << std::endl;
+}
 \end{lstlisting}
 
 \begin{lstlisting}[label=lst:swap,caption=Функция перестановки элементов места swap]
-	void swap(int &el1, int &el2)
-	{
-		int temp = el1;
-		el1 = el2;
-		el2 = temp;
-	}
+void swap(int &el1, int &el2)
+{
+	int temp = el1;
+	el1 = el2;
+	el2 = temp;
+}
 \end{lstlisting}
 
 \clearpage
@@ -174,11 +177,12 @@
 \section{Функциональные тесты}
 
 В таблице \ref{tbl:func_tests} приведены функциональные тесты для разработанных алгоритмов сортировки. Все тесты пройдены успешно.
-Под обозначением "$-$" в строках таблицы значит, что данная сортировка не может работать с отрицательными числами, а именно сортировка Бусинами работающая только с натуральными числами.
+Под обозначением "$-$" \newline в строках таблицы значит, что данная сортировка не может работать с отрицательными числами, а именно сортировка Бусинами работающая только с натуральными числами.
 
 \begin{table}[ht]
 	\small
 	\begin{center}
+		\begin{threeparttable}
 		\caption{Функциональные тесты}
 		\label{tbl:func_tests}
 		\begin{tabular}{|c|c|c|c|c|}
@@ -199,10 +203,11 @@
 			\hline
 			-59 -33 -66 -100 -31 & 5 & -100 -66 -59 -33 -31 & -100 -66 -59 -33 -31 & - \\
 			\hline
-		\end{tabular}
+		\end{tabular}	
+		\end{threeparttable}	
 	\end{center}
 \end{table}
 
-\section{Вывод}
+\section*{Вывод}
 
 Были реализованы алгоритмы: сортировка Шелла, пирамидальная сортировка и сортировка бусинами. Проведено тестирование разработанных алгоритмов.
