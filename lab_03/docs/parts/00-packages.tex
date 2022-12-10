@@ -16,18 +16,18 @@
 
 \usepackage{amsmath}
 \usepackage{csvsimple}
+\usepackage{enumitem} 
+\setenumerate[0]{label=\arabic*)} % Изменение вида нумерации списков
+\renewcommand{\labelitemi}{---}
 
 \usepackage{geometry}
 \geometry{left=30mm}
-\geometry{right=10mm}
+\geometry{right=15mm}
 \geometry{top=20mm}
 \geometry{bottom=20mm}
 
 \usepackage{titlesec}
-\titleformat{\section}
-{\normalsize\bfseries}
-{\thesection}
-{1em}{}
+\titleformat{\section}{\normalsize\bfseries}{\thesection}{1em}{}
 \titlespacing*{\chapter}{0pt}{-30pt}{8pt}
 \titlespacing*{\section}{\parindent}{*4}{*4}
 \titlespacing*{\subsection}{\parindent}{*4}{*4}
