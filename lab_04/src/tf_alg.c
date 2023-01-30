@@ -31,6 +31,7 @@ cltn_t allocate_cltn(size_t n) {
             tmp.buff[i].word = malloc(WORD_LEN * sizeof(char));
             if (tmp.buff[i].word == NULL) {
                 free_cltn(tmp);
+                tmp.buff = NULL;
                 break;
             }
         }
@@ -73,8 +74,7 @@ mtr_t split(char *str, char *delim) {
     char *word = strtok(str, delim);
     int i = 0;
     while (word != NULL) {
-        if (i <= words_cnt)
-            strcpy(words.buff[i], word);
+        strcpy(words.buff[i], word);
         word = strtok(NULL, delim);
         i++;
     }
@@ -93,49 +93,47 @@ int check_word_in_dict(const map *words, const char *find, size_t cnt) {
     return 0;
 }
 
-void couting_words(cltn_t *dict, const mtr_t *words) {
-    dict->n = 0;
-    int word_cnt;
-    for (int i = 0, k = 0; i < words->n; i++) {
-        if (check_word_in_dict(dict->buff, words->buff[i], dict->n))
-            continue;
-        word_cnt = 1;
-        for (int j = i + 1; j < words->n; j++) {
-            if (strcmp(words->buff[i], words->buff[j]) == 0)
-                word_cnt++;
-        }
-        strcpy(dict->buff[k].word, words->buff[i]);
-        dict->buff[k].cnt = tf(word_cnt, words->n);
-        dict->n++;
-        k++;
-    }
-}
-
 double tf(int find_word_cnt, int words_cnt) {
     return (double) find_word_cnt / words_cnt;
 }
 
-void find_cltn_tf(mtr_t *docs, cltn_t *cltn, size_t docs_cnt) {
-    for (int k = 0; k < docs_cnt; k++) {
-        couting_words(&cltn[k], &docs[k]);
+void couting_words(cltn_t *cltn, const mtr_t *doc) {
+    cltn->n = 0;
+    int word_cnt;
+    for (int i = 0, k = 0; i < doc->n; i++) {
+        if (check_word_in_dict(cltn->buff, doc->buff[i], cltn->n))
+            continue;
+        word_cnt = 1;
+        for (int j = i + 1; j < doc->n; j++)
+            if (strcmp(doc->buff[i], doc->buff[j]) == 0)
+                word_cnt++;
+
+        strcpy(cltn->buff[k].word, doc->buff[i]);
+        cltn->buff[k].cnt = tf(word_cnt, doc->n);
+        cltn->n++;
+        k++;
     }
+}
+
+void find_cltn_tf(mtr_t *docs, cltn_t *cltn, size_t docs_cnt) {
+    for (int i = 0; i < docs_cnt; i++)
+        couting_words(&cltn[i], &docs[i]);
 }
 
 void printf_cltn(const cltn_t *cltn, size_t out_cnt, size_t docs_cnt) {
 
     for (int doc_i = 0; doc_i < docs_cnt; doc_i++) {
         printf("Document %d:\n", doc_i + 1);
-        for (int j = 0; cltn[doc_i].n >= j && j < out_cnt; j++) {
-            int maxi = 0;
-            double max = cltn[doc_i].buff[j].cnt;
-            for (int i = 0; i < cltn[doc_i].n; ++i) {
-                if (cltn[doc_i].buff[i].cnt > max) {
-                    max = cltn[doc_i].buff[i].cnt;
-                    maxi = i;
-                }
-            }
-            printf("   %s\n", cltn[doc_i].buff[maxi].word);
-            cltn[doc_i].buff[maxi].cnt = -1;
+        for (int j = 0; j < cltn[doc_i].n; j++) {
+//            int maxi = 0;
+//            double max = cltn[doc_i].buff[j].cnt;
+//            for (int i = 0; i < cltn[doc_i].n; ++i) {
+//                if (cltn[doc_i].buff[i].cnt > max) {
+//                    max = cltn[doc_i].buff[i].cnt;
+//                    maxi = i;
+//                }
+//            }
+            printf("   %s: %.2f\n", cltn[doc_i].buff[j].word, cltn[doc_i].buff[j].cnt);
         }
     }
 }

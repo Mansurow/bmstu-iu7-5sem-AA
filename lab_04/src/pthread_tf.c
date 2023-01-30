@@ -8,10 +8,6 @@ void *thread_work(void *args) {
     cltn_t *cltn = targs->cltn;
 
     for (int thr = start; thr < end; thr++) {
-
-//        printf("Thr: %d - %d\n", start, end);
-//        printf("doc: %s .... %d\n", docs[thr].buff[0], docs[thr].n);
-//      printf("cltn: %s")
         int word_cnt;
         cltn[thr].n = 0;
         for (int i = 0, k = 0; i < docs[thr].n; i++) {
@@ -29,18 +25,12 @@ void *thread_work(void *args) {
             //mutex_unlock
             k++;
         }
-
-        //couting_words(&cltn[thr], &docs[thr]);
     }
 
     return NULL;
 }
 
 void parallel_find_cltn_tf(int threads, mtr_t *docs, cltn_t *cltn, size_t docs_cnt) {
-//    cltn_t collection[docs_cnt];
-
-//    for (int i = 0; i < docs_cnt; i++)
-//        collection[i] = allocate_cltn(docs[i].n);
     if (threads <= 0)
         return;
 
@@ -64,12 +54,6 @@ void parallel_find_cltn_tf(int threads, mtr_t *docs, cltn_t *cltn, size_t docs_c
             pthread_join(tid[thread], NULL);
     }
 
-//    for (int k = 0; k < DOCS_CNT; k++)
-//        for (int i = 0; i < cltn[k].n; i++)
-//            printf("%s: %f\n", cltn[k].buff[i].word, cltn[k].buff[i].cnt);
-
     free(tid);
     free(args);
-//    for (int i = 0; i < docs_cnt; i++)
-//        free_cltn(collection[i], collection[i].n);
 }

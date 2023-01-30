@@ -42,9 +42,11 @@ int get_cnt_words(const char *str);
 // проверка на одно вхождение в словарь
 int check_word_in_dict(const map *words, const char *find, size_t cnt);
 // подсчет каждого слова и его tf
-void couting_words(cltn_t *dict, const mtr_t *words);
+void couting_words(cltn_t *cltn, const mtr_t *doc);
 // рассчет коэффицента tf
 double tf(int find_word_cnt, int words_cnt);
 void find_cltn_tf(mtr_t *docs, cltn_t *cltn, size_t docs_cnt);
+
+void printf_cltn(const cltn_t *cltn, size_t out_cnt, size_t docs_cnt);
 
 #endif //TF_ALG_H

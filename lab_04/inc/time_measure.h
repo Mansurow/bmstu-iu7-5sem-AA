@@ -7,6 +7,6 @@
 
 #define NUMBER_OPER 1000
 
-void time_measure(int start, int max_len, int step);
+int time_measure(int start, int max_len, int step);
 
 #endif //TIME_MEASURE_H
