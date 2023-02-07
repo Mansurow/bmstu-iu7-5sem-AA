@@ -18,17 +18,17 @@ void *thread_work(void *args) {
                 if (strcmp(docs[thr].buff[i], docs[thr].buff[j]) == 0)
                     word_cnt++;
             }
-            //mutex_lock
             strcpy(cltn[thr].buff[k].word, docs[thr].buff[i]);
             cltn[thr].buff[k].cnt = tf(word_cnt, docs[thr].n);
             cltn[thr].n++;
-            //mutex_unlock
             k++;
         }
     }
 
     return NULL;
 }
+
+
 
 void parallel_find_cltn_tf(int threads, mtr_t *docs, cltn_t *cltn, size_t docs_cnt) {
     if (threads <= 0)
