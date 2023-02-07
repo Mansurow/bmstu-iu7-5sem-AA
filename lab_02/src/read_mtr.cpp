@@ -1,4 +1,4 @@
-#include "read_mtr.h"
+#include "../inc/read_mtr.h"
 
 int read_size(int &n)
 {

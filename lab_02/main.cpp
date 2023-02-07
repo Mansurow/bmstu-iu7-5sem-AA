@@ -1,8 +1,8 @@
 #include <iostream>
-#include "read_mtr.h"
-#include "multy_mtr.h"
-#include "print_mtr.h"
-#include "cpu_time.h"
+#include "inc/read_mtr.h"
+#include "inc/multy_mtr.h"
+#include "inc/print_mtr.h"
+#include "inc/cpu_time.h"
 
 int main() {
     setbuf(stdout, NULL);

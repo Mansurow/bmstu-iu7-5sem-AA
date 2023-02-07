@@ -1,4 +1,4 @@
-#include "multy_mtr.h"
+#include "../inc/multy_mtr.h"
 
 matrix_v empty_matrix()
 {
@@ -46,11 +46,9 @@ matrix_v vinograd_alg(const matrix_v &mtr1, const matrix_v &mtr2)
     for (size_t i = 0; i < n; i++)
         for (size_t j = 0; j < m / 2; j++)
             rowSum[i] = rowSum[i] + mtr1[i][2 * j] * mtr1[i][2 * j + 1];
-
     for (size_t i = 0; i < t; i++)
         for (size_t j = 0; j < m / 2; j++)
             colSum[i] = colSum[i] + mtr2[2 * j][i] * mtr2[2 * j + 1][i];
-
     for (size_t i = 0; i < n; i++)
         for (size_t j = 0; j < t; j++) {
             res[i][j] = -rowSum[i] - colSum[j];
@@ -83,11 +81,9 @@ matrix_v opt_vinograd_alg(const matrix_v &mtr1, const matrix_v &mtr2)
     for (size_t i = 0; i < n; i++)
         for (size_t j = 0; j < halfm; j++)
             rowSum[i] += mtr1[i][j << 1] * mtr1[i][(j << 1) + 1];
-
     for (size_t i = 0; i < t; i++)
         for (size_t j = 0; j < halfm; j++)
             colSum[i] += mtr2[(j << 1)][i] * mtr2[(j << 1) + 1][i];
-
     for (size_t i = 0; i < n; i++)
         for (size_t j = 0; j < t; j++) {
             res[i][j] = -rowSum[i] - colSum[j];

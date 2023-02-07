@@ -1,4 +1,4 @@
-#include "print_mtr.h"
+#include "../inc/print_mtr.h"
 
 void print_mtr(matrix_v mtr)
 {

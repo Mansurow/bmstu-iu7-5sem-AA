@@ -1,4 +1,4 @@
-#include "cpu_time.h"
+#include "../inc/cpu_time.h"
 
 #define NUMBER_OPER 1000
 
