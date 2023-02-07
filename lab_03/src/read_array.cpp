@@ -1,4 +1,4 @@
-#include "read_array.h"
+#include "../inc/read_array.h"
 
 int read_size(int &n) {
     std::cout << "Введите размер массива: ";

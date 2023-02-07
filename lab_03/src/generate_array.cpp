@@ -1,4 +1,4 @@
-#include "generate_array.h"
+#include "../inc/generate_array.h"
 
 void generate_random_array(int *arr, const size_t n)
 {

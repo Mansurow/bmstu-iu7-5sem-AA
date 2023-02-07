@@ -1,4 +1,4 @@
-#include "sorts.h"
+#include "../inc/sorts.h"
 
 void print_array(int *array, size_t n)
 {

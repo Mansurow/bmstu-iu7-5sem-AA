@@ -4,6 +4,7 @@
 \usepackage[english,russian]{babel} % Языки: английский, русский
 \usepackage{enumitem}
 
+\usepackage{multirow}
 \usepackage{threeparttable}
 
 \usepackage[14pt]{extsizes}
@@ -39,9 +40,29 @@
 \usepackage{setspace}
 \onehalfspacing % Полуторный интервал
 
+% Список литературы
+\makeatletter 
+\def\@biblabel#1{#1 } % Изменение нумерации списка использованных источников
+\makeatother
+
 \frenchspacing
 \usepackage{indentfirst} % Красная строка после заголовка
 \setlength\parindent{1.25cm}
+
+\usepackage{ulem} % Нормальное нижнее подчеркивание
+\usepackage{hhline} % Двойная горизонтальная линия в таблицах
+\usepackage[figure,table]{totalcount} % Подсчет изображений, таблиц
+\usepackage{rotating} % Поворот изображения вместе с названием
+\usepackage{lastpage} % Для подсчета числа страниц
+
+% Дополнительное окружения для подписей
+\usepackage{array}
+\newenvironment{signstabular}[1][1]{
+	\renewcommand*{\arraystretch}{#1}
+	\tabular
+}{
+	\endtabular
+}
 
 \usepackage{listings}
 \usepackage{xcolor}
@@ -50,9 +71,12 @@
 \lstset{%
 	language=c++,   					% выбор языка для подсветки	
 	basicstyle=\small\sffamily,			% размер и начертание шрифта для подсветки кода
+	numbersep=5pt,
 	numbers=left,						% где поставить нумерацию строк (слева\справа)
-	%numberstyle=,					% размер шрифта для номеров строк
+	%numberstyle=,					    % размер шрифта для номеров строк
 	stepnumber=1,						% размер шага между двумя номерами строк
+	xleftmargin=17pt,
+	showstringspaces=false,
 	numbersep=5pt,						% как далеко отстоят номера строк от подсвечиваемого кода
 	frame=single,						% рисовать рамку вокруг кода
 	tabsize=4,							% размер табуляции по умолчанию равен 4 пробелам

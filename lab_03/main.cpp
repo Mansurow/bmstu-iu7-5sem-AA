@@ -1,8 +1,8 @@
 #include <iostream>
-#include "sorts.h"
-#include "allocate.h"
-#include "read_array.h"
-#include "cpu_time.h"
+#include "inc/sorts.h"
+#include "inc/allocate.h"
+#include "inc/read_array.h"
+#include "inc/cpu_time.h"
 
 using namespace std;
 
@@ -14,7 +14,7 @@ int main() {
               "1 - Сортировка Шелла; \n"
               "2 - Пирамидальная сортировка; \n"
               "3 - Сортировка бусинами; \n"
-              "4 - Замерить время сортировок.\n" << endl;
+              "4 - Замерить время работы реализаций алгоритмов сортировок.\n" << endl;
 
     int choice = -1;
     int *array = nullptr;

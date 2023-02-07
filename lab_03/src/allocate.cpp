@@ -1,4 +1,4 @@
-#include "allocate.h"
+#include "../inc/allocate.h"
 
 int *allocate_arr(size_t n)
 {
