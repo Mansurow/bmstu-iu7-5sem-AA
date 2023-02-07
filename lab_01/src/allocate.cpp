@@ -1,4 +1,4 @@
-#include "allocate.h"
+#include "../inc/allocate.h"
 
 void free_mtr(int **mtr, std::size_t n) {
     if (mtr != nullptr)

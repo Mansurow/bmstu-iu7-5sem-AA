@@ -1,4 +1,4 @@
-#include "cpu_time.h"
+#include "../inc/cpu_time.h"
 
 std::wstring gen_random(const size_t len) {
     std::wstring al = L"0123456789"

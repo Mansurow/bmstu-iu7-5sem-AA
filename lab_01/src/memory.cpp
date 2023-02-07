@@ -1,4 +1,4 @@
-#include "memory.h"
+#include "../inc/memory.h"
 
 std::size_t get_size_lev_mtr(std::size_t len) {
     return (len + 1) * (len + 1) * sizeof(int) +

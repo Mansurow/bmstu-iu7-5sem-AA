@@ -2,17 +2,6 @@
 
 В данном разделе будут приведены требования к программному обеспечению, средства реализации, листинг кода и функциональные тесты.
 
-\section{Требования к программному обеспечению}\label{section:requirements}
-
-К программе предъявлен ряд требований:
-
-\begin{itemize}[label=---]
-	\item наличие интерфейса для выбора действий;
-	\item должна обрабатывать строки;
-	\item возможность обработки строк, включающих буквы как на латинице, так и на кириллице;
-	\item наличие функциональности замера процессорного времени работы реализаций алгоритмов поиска расстояний Левенштейна и Дамерау-Левен- штейна.
-\end{itemize}
-
 \section{Средства реализации}
 
 Для реализации данной лабораторной работы был выбран язык $C++$ \cite{cpp-lang}. Данный выбор обусловлен наличием у языка встроенного модуля $ctime$ измерения процессорного времени и типа данных, позволяющего хранить как кириллические символы, так и латинские --- $std::wstring$, что позволит удовлетворить третьему требованию из п.\ref{section:requirements} соответствуют выдвинутым техническим требованиям.
@@ -34,7 +23,7 @@
 	\item \texttt{memory.cpp} --- файл содержит функции, замеряющее память итеративного и рекурсивного алгоритмов поиска расстояния Левенштейна.
 \end{itemize}
 
-%ТУТ должен быть абзац с [групповой] ссылкой на листинги
+\section{Реализация алгоритмов}
 
 В листингах \ref{lst:lev_mtr} -- \ref{lst:dameray_lev_rec_hash} приведены реализации алгоритмов поиска расстояний Левенштейна (только нерекурсивный алгоритм) и Дамерау-Левенштейна (нерекурсивный, рекурсивный и рекурсивный с кешированием).
 В листингах \ref{lst:allocate_mtr} -- \ref{lst:print_mtr} приведены реализации алгоритмов выделения памяти под матрицу и вывод матрицы.
@@ -149,8 +138,7 @@ int dameray_lev_rec(wstring &str1, wstring &str2)
 \clearpage
 
 \begin{lstlisting}[label=lst:dameray_lev_rec_hash,caption=Функция нахождения расстояния Дамерау-Левенштейна рекурсивно c кешированием]
-int dameray_lev_rec_hash_t(wstring &str1, wstring &str2, int **mtr, size_t n, size_t m)
-{
+int dameray_lev_rec_hash_t(wstring &str1, wstring &str2, int **mtr, size_t n, size_t m) {
 	if (n == 0)
 		return mtr[n][m] = m;
 	if (m == 0)
@@ -168,8 +156,7 @@ int dameray_lev_rec_hash_t(wstring &str1, wstring &str2, int **mtr, size_t n, si
 	return mtr[n][m];
 }
 
-int dameray_lev_rec_hash(wstring &str1, wstring &str2, bool print)
-{
+int dameray_lev_rec_hash(wstring &str1, wstring &str2, bool print) {
 	size_t n = str1.length();
 	size_t m = str2.length();
 	int **mtr = malloc_mtr(n + 1, m + 1);

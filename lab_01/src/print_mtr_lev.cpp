@@ -1,4 +1,4 @@
-#include "print_mtr_lev.h"
+#include "../inc/print_mtr_lev.h"
 
 void print_mtr_lev(std::wstring str1, std::wstring str2,
                    int **mtr, std::size_t n, std::size_t m)

@@ -1,5 +1,5 @@
-#include "algorithms.h"
-#include "print_mtr_lev.h"
+#include "../inc/algorithms.h"
+#include "../inc/print_mtr_lev.h"
 
 int lev_mtr(wstring &str1, wstring &str2, bool print)
 {

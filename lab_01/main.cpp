@@ -2,9 +2,9 @@
 #include <io.h>
 #include <fcntl.h>
 
-#include "algorithms.h"
-#include "cpu_time.h"
-#include "memory.h"
+#include "inc/algorithms.h"
+#include "inc/cpu_time.h"
+#include "inc/memory.h"
 
 #define MAX_LEN 200
 #define STEP 10
