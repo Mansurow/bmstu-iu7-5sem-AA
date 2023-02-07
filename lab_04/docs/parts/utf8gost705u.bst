@@ -447,9 +447,9 @@ FUNCTION {bbl.iin}  %     { "\bblIn{}" }
 
 FUNCTION {bbl.pages}    % { "\bblpp." }
 {  curlanguage "english" =
-    {"pp."}
+    {"--- Pp."}
     { curlanguage "ukrainian" = curlanguage "russian" = or
-           {"{с.}"}
+           {"{--- C.}"}
            {"language is not defined: " language  "pp." * * warning$ "pp."}
       if$}
   if$
@@ -457,29 +457,29 @@ FUNCTION {bbl.pages}    % { "\bblpp." }
 
 FUNCTION {bbl.page}   %   { "\bblp."
 {  curlanguage "english" =
-    {"p."}
+    {"--- P."}
     { curlanguage "ukrainian" = curlanguage "russian" = or
-           {"{с.}"}
-           {"language is not defined: " language  "p." * * warning$ "p."}
+           {"{--- C.}"}
+           {"language is not defined: " language  "P." * * warning$ "P."}
       if$}
   if$
 }
 
 FUNCTION {bbl.ppages}%    { "\bblPp." }
 {  curlanguage "english" =
-    {"pp."}
+    {"--- Pp."}
     { curlanguage "ukrainian" = curlanguage "russian" = or
-           {"{С.}"}
-           {"language is not defined: " language  "pp." * * warning$ "pp."}
+           {"{--- С.}"}
+           {"language is not defined: " language  "Pp." * * warning$ "Pp."}
       if$}
   if$
 }
 
 FUNCTION {bbl.ppage}  %   { "\bblP." }
 {  curlanguage "english" =
-    {"P."}
+    {"--- P."}
     { curlanguage "ukrainian" = curlanguage "russian" = or
-           {"{С.}"}
+           {"{--- С.}"}
            {"language is not defined: " language  "P." * * warning$ "P."}
       if$}
   if$
