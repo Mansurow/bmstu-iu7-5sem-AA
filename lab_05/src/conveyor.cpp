@@ -4,6 +4,14 @@ std::mutex mutex_q1;
 std::mutex mutex_q2;
 //std::mutex mutex_q3;
 
+//long int printf_time(timespec start_t, timespec end_t, char *str, timespec t) {
+//    long int time = (end_t.tv_sec - start_t.tv_sec) * 1000000000 + end_t.tv_nsec - start_t.tv_nsec;
+//    long int start = (start_t.tv_sec - t.tv_sec) * 1000000000 + start_t.tv_nsec -t.tv_nsec;
+//    long int end = (end_t.tv_sec - t.tv_sec) * 1000000000 + end_t.tv_nsec - t.tv_nsec;
+//    printf("%s: %ld === %ld --- %ld\n", str, time, start, end);
+//    return time;
+//}
+
 void pack_data(size_t n, size_t m, size_t cnt, request_t *r) {
     generate_mtr_csr(r->mtr_a, n, m, cnt);
     generate_mtr_csr(r->mtr_b, n, m, cnt);
@@ -31,8 +39,6 @@ void linear() {
         clock_gettime(CLOCK_REALTIME, &r->p3_start);
         r->result = decomprass(r->mtr_c);
         clock_gettime(CLOCK_REALTIME, &r->p3_end);
-
-        print_mtr(r->result);
 
         pool[i] = r;
     }
@@ -85,7 +91,7 @@ void thread_3(int req_cnt, std::queue<request_t *> &q2, std::vector<request_t *>
 
         clock_gettime(CLOCK_REALTIME, &r->p3_start);
         r->result = decomprass(r->mtr_c);
-        clock_gettime(CLOCK_REALTIME, &r->p2_end);
+        clock_gettime(CLOCK_REALTIME, &r->p3_end);
         pool[i] = r;
     }
 }
@@ -100,6 +106,7 @@ void parallel() {
     std::queue<request_t *> q1;
     std::queue<request_t *> q2;
     std::queue<request_t *> q3;
+
     std::thread t_1(thread_1, req_cnt, n, m, cnt, std::ref(q1));
     std::thread t_2(thread_2, req_cnt, std::ref(q1), std::ref(q2));
     std::thread t_3(thread_3, req_cnt, std::ref(q2), std::ref(pool));
@@ -108,6 +115,7 @@ void parallel() {
     t_2.join();
     t_3.join();
 
+    print_pool(pool, "parallel.txt");
     for (size_t i = 0; i < pool.size(); ++i)
         delete pool[i];
 }
@@ -170,11 +178,14 @@ void print_pool(std::vector<request_t *> &pool, const std::string &filename) {
     }
     std::sort(pool_sort.begin(), pool_sort.end());
     std::ofstream fout;
-    fout.open(filename);
-    for (size_t i = 0; i < pool_sort.size(); ++i)
-    {
-        fout << pool_sort[i].message << std::endl;
-    }
+    fout.open(filename, std::ios_base::app);
+    sum += pool_sort[pool_sort.size() - 1].nanosec;
     // printf("%s %lld\n", pool_sort[pool_sort.size() - 1].message.c_str(), pool_sort[pool_sort.size() - 1].nanosec);
+    if (num % LOOPS == 0)
+    {
+        fout << sum / LOOPS << std::endl;
+        sum = 0;
+    }
+    ++num;
     fout.close();
 }

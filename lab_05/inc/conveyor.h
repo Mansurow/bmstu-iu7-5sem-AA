@@ -12,7 +12,6 @@
 
 #include "../inc/mtr_op.h"
 #include "../inc/read_size.h"
-#include "../inc/measure.h"
 
 struct request_t {
     matrix_csr_t mtr_a;

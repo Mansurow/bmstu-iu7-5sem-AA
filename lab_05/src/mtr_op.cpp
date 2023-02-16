@@ -2,7 +2,6 @@
 
 void generate_mtr_csr(matrix_csr_t &a, size_t n, size_t m, size_t num_cnt) {
     int cnt = 0, prev = 0;
-
     a.n = n;
     a.m = m;
 
@@ -17,7 +16,7 @@ void generate_mtr_csr(matrix_csr_t &a, size_t n, size_t m, size_t num_cnt) {
                 val++;
             }
         }
-        //std::cout << i + 1 << " " <<  val << std::endl;
+
         if (i == 0)
             a.nr.push_back(0);
         else if (val == 0) {
@@ -62,22 +61,15 @@ matrix_csr_t sum_mtr_csr(matrix_csr_t &a, matrix_csr_t &b) {
 
     int val = 0;
     for (int i = 0; i < a.nr.size() - 1; i++) {
-
         if (i == 0)
             c.nr.push_back(0);
         else
             c.nr.push_back(c.nr[i - 1] + val);
         val = 0;
 
-        int start = a.nr[i];
-        int end = a.nr[i + 1];
-        int start_b = b.nr[i];
-        int end_b = b.nr[i + 1];
-
-        int ka = start;
-        int kb = start_b;
-        for (; ka < end && kb < end_b;) {
-
+        int ka = a.nr[i];
+        int kb = b.nr[i];
+        for (; ka < a.nr[i + 1] && kb < b.nr[i + 1];) {
             if (a.ja[ka] < b.ja[kb]) {
                 c.ja.push_back(a.ja[ka]);
                 c.an.push_back(a.an[ka++]);
@@ -91,19 +83,18 @@ matrix_csr_t sum_mtr_csr(matrix_csr_t &a, matrix_csr_t &b) {
             val++;
         }
 
-        for (; ka < end; ka++) {
+        for (; ka < a.nr[i + 1]; ka++) {
             c.ja.push_back(a.ja[ka]);
             c.an.push_back(a.an[ka]);
             val++;
         }
-        for (; kb < end_b; kb++) {
+        for (; kb < b.nr[i + 1]; kb++) {
             c.ja.push_back(b.ja[kb]);
             c.an.push_back(b.an[kb]);
             val++;
         }
     }
     c.nr.push_back(c.nr[c.nr.size() - 1] + (c.an.size() - c.nr[c.nr.size() - 1]));
-
     return c;
 }
 
