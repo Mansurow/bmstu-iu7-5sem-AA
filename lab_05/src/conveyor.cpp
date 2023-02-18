@@ -105,7 +105,6 @@ void parallel() {
     std::vector<request_t *> pool(req_cnt);
     std::queue<request_t *> q1;
     std::queue<request_t *> q2;
-    std::queue<request_t *> q3;
 
     std::thread t_1(thread_1, req_cnt, n, m, cnt, std::ref(q1));
     std::thread t_2(thread_2, req_cnt, std::ref(q1), std::ref(q2));
