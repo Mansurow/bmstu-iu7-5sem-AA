@@ -1,0 +1,13 @@
+\chapter*{Приложение Б}
+\addcontentsline{toc}{chapter}{Приложение Б}
+
+\begin{center}
+    \captionsetup{justification=raggedright,singlelinecheck=off}    
+    \begin{longtable}[c]{|l|l|l|l|l|}
+        \caption{Параметризация для класса данных 2\label{tbl:param_kd1}, Days --- количество дней, Result --- результат работы, Mistake --- ошибочность полученного результата}\\ \hline
+        $\alpha$ & $\rho$ & Days & Result & Mistake
+        \csvreader{csv/parametrization_class2.txt}{}
+			{\\ \hline \csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv}
+			\\ \hline
+\end{longtable}
+\end{center}

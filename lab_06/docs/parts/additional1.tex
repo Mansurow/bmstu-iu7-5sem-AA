@@ -1,0 +1,12 @@
+\chapter*{Приложение А}
+\addcontentsline{toc}{chapter}{Приложение А}
+
+\begin{center}
+    \begin{longtable}[c]{|l|l|l|l|l|}
+        \caption{Параметризация для класса данных 1\label{tbl:param_kd1-1}, Days --- количество дней, Result --- результат работы, Mistake --- ошибочность полученного результата}\\ \hline
+        $\alpha$ & $\rho$ & Days & Result & Mistake
+        \csvreader{csv/class1-1.txt}{}
+			{\\ \hline \csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv} 
+			\\ \hline
+\end{longtable}
+\end{center}

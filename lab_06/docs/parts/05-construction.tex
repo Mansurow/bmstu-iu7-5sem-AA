@@ -1,0 +1,74 @@
+\chapter{Конструкторская часть}
+
+В данном разделе будут представлены схемы алгоритма полного перебора и муравьиного алгоритма.
+
+\section{Требования к программному обеспечению}
+
+К программе предъявлены ряд требований:
+
+\begin{itemize}[label=---]
+	\item программа должна получать на вход матрицу смежности, для которой можно будет выбрать один из алгоритмов поиска оптимальных путей (полным перебором или муравьиным алгоритмом);
+	\item программа должна позволять пользователю определять коэффициенты и количество дней для муравьиного алгоритма;
+	\item программа должна давать возможность получить минимальную сумму пути, а также сам путь, используя один из алгоритмов.
+\end{itemize}
+
+\section{Разработка алгоритмов}
+
+На рисунке~\ref{fig:full-comb} представлена схема алгоритма полного перебора путей.
+На рисунках~\ref{fig:ants-1} и \ref{fig:ants-2}  представлена схема алгоритма муравьиного алгоритма.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[height=0.8\textheight]{img/full-comb.png}
+	\caption{Схема алгоритма полного перебора путей}
+	\label{fig:full-comb}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[height=0.9\textheight]{img/ants-1.png}
+	\caption{Схема муравьиного алгоритма (часть 1)}
+	\label{fig:ants-1}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[height=0.9\textheight]{img/ants-2.png}
+	\caption{Схема муравьиного алгоритма (часть 2)}
+	\label{fig:ants-2}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[height=0.9\textheight]{img/find-pos.png}
+	\caption{Схема алгоритма нахождения массива вероятностей переходов в непосещенные города}
+	\label{fig:find-pos}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[height=0.9\textheight]{img/update.png}
+	\caption{Схема алгоритма обновления матрицы феромонов}
+	\label{fig:update}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[height=0.7\textheight]{img/rand-choice.png}
+	\caption{Схема алгоритма выбора следующего города}
+	\label{fig:rand-choice}
+\end{figure}
+
+\clearpage
+
+\section{Описание используемых типов данных}
+При реализации алгоритмов будут использованы следующие типы данных:
+\begin{itemize}[label=---]
+	\item размер матрицы смежности --- целое число;
+	\item имя файла --- строка;
+	\item коэффициенты $\alpha, \beta$, \textit{k\_evaporation} --- действительные числа;
+	\item матрица смежности --- матрица целых чисел.
+\end{itemize}
+
+\section*{Вывод}
+В данном разделе была рассмотрена задача коммивояжера, а также полный перебор для её решения и муравьиный алгоритм. Были представлены требования к разрабатываемому программному обеспечению.
